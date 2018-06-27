@@ -42,9 +42,9 @@ var dtable = {
   
 
   
-  totext(file+'.asm',file+'.hack');
+  assmble(file+'.asm',file+'.hack');
   
-  function totext(asmFile, objFile){// asm是輸入檔 hakc是輸出檔
+  function assmble(asmFile, objFile){// asm是輸入檔 hakc是輸出檔
       var text = fs.readFileSync(asmFile, "utf8");// 讀取檔案到 text 轉成字串
       var lines = text.split(/\r?\n/);//分割成一行一行 \n,\r都是換行字元 mac,linux是\n windows是\r\n
       c.log(JSON.stringify(lines,null,2));//JSON.stringify(value[, replacer[, space]]) 使用2個空格縮進
