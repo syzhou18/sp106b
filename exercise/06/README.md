@@ -1,4 +1,4 @@
-$ node assm.js add/Add
+<pre>$ node assm.js add/Add</pre>
 ------------------------
 <pre>[
   "// This file is part of www.nand2tetris.org",
