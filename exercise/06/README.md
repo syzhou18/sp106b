@@ -1,6 +1,6 @@
 $ node assm.js add/Add
 ------------------------
-[
+<pre>[
   "// This file is part of www.nand2tetris.org",
   "// and the book \"The Elements of Computing Systems\"",
   "// by Nisan and Schocken, MIT Press.",
@@ -35,4 +35,4 @@ p:{"type":"C","c":"D","d":"M","j":""}
 010:0000000000000011 @3
 011:1110000010010000 D=D+A
 012:0000000000000000 @0
-013:1110001100001000 M=D
+013:1110001100001000 M=D</pre>
