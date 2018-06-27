@@ -42,9 +42,9 @@ var dtable = {
   
 
   
-  totext(file+'.asm',file+'.hack');
+  assmble(file+'.asm',file+'.hack');
   
-  function totext(asmFile, objFile){// asm是輸入檔 hakc是輸出檔
+  function assmble(asmFile, objFile){// asm是輸入檔 hakc是輸出檔
       var text = fs.readFileSync(asmFile, "utf8");// 讀取檔案到 text 轉成字串
       var lines = text.split(/\r?\n/);//分割成一行一行 \n,\r都是換行字元 mac,linux是\n windows是\r\n
       c.log(JSON.stringify(lines,null,2));//JSON.stringify(value[, replacer[, space]]) 使用2個空格縮進
@@ -61,7 +61,7 @@ var dtable = {
         return {type:"A",arg:line.substring(1).trim()};//第0個是@ 從第1個開始傳回字串
     }else if(line.match(/^\(([^\)]+)\)$/)){// ^開頭 \跳開字元 [^]裡的^代表不要 $結束
         return {type:"S",symbol:RegExp.$1};
-    }else if(line.match(/^((([AMD]*)=)?([AMD01\+\-\&\|\!]*))(;(\w*))?$/)){
+    }else if(line.match(/^((([AMD]*)=)?([AMD01\+\-\&\|\!]*))(;([A-Za-z0-9_]*))?$/)){
         return {type:"C",c:RegExp.$4,d:RegExp.$3,j:RegExp.$6,};
     };
   }
@@ -80,7 +80,7 @@ function addSymbol(symbol){//加入新的符號
 function code(p){
     var address;
     if(p.type==="A"){
-        if(p.arg.match(/^\d+$/)){//如果@後是數字
+        if(p.arg.match(/^[0-9]+$/)){//如果@後是數字
             address = parseInt(p.arg);//parseInt()字串轉數字
         }else{
             address = symTable[p.arg];
