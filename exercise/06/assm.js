@@ -61,7 +61,7 @@ var dtable = {
         return {type:"A",arg:line.substring(1).trim()};//第0個是@ 從第1個開始傳回字串
     }else if(line.match(/^\(([^\)]+)\)$/)){// ^開頭 \跳開字元 [^]裡的^代表不要 $結束
         return {type:"S",symbol:RegExp.$1};
-    }else if(line.match(/^((([AMD]*)=)?([AMD01\+\-\&\|\!]*))(;([A-Za-z0-9_]*))?$/)){
+    }else if(line.match(/^((([AMD]*)=)?([AMD01\+\-\&\|\!]*))(;([A-Za-z_]*))?$/)){
         return {type:"C",c:RegExp.$4,d:RegExp.$3,j:RegExp.$6,};
     };
   }
@@ -107,7 +107,7 @@ function part1(lines){
     var p = parse(lines[i], i);
     if(p===null)continue;
     if(p.type==="S"){//如果是符號,加到符號表紀錄位址
-        c.log("%s:symbol:%s %s",intTostring(i+1,3,10),p.symbol,intTostring(address,4,10));
+        c.log("%s:(%s)",intTostring(i+1,3,10),p.symbol);
         symTable[p.symbol] = address;
         continue;
     }
@@ -121,14 +121,12 @@ function part1(lines){
 function part2(lines, objFile){
     c.log("===========part2===========");
     var ws = fs.createWriteStream(objFile);//創造輸出檔 ex:Add.hack
-    ws.once("open",function(fd){
-        var address = 0;
+    ws.once("open",function(fd){        
         for(var i=0;i<lines.length;i++){
             var p = parse(lines[i], i);
             if(p===null||p.type==="S")continue;
             c.log("%s:%s %s",intTostring(i+1,3,10),intTostring(code(p),16,2),lines[i]);
-            ws.write(intTostring(code(p),16,2)+"\n");
-            address++
+            ws.write(intTostring(code(p),16,2)+"\n");            
         }
         ws.end();
     });
